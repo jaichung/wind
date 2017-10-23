@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1508722145915.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "581431DE",
+    "lastKnownWriteTime" : 6877962480714539380,
+    "last_content_update" : 1508722145915,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "2081140E",
+        "caption" : "stations_dup",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=stations_dup&cache_key=2081140E",
+        "displayedObservations" : 108,
+        "environment" : "",
+        "object" : "stations_dup",
+        "preview" : 0,
+        "totalObservations" : 108,
+        "variables" : 16
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "curve(exp(x), from=1, to=5, lwd=5)\ncurve(150-exp(x), from=1, to=5, lwd=5, col=\"darkblue\",add=T)\n\n## Here's the bit I added.\npar(fig = c(grconvertX(c(1, 3), from=\"user\", to=\"ndc\"),\n            grconvertY(c(20, 125), from=\"user\", to=\"ndc\")),\n    mar = c(4,6,1,1),\n    new = TRUE)\n\ncurve(exp(x), from=1, to=5, lwd=7, xlab=\"chi\", ylab=\"exp(x)\", cex.lab=4,axes=F)\naxis(1, labels=NA,at=c(0,5))\naxis(2, labels=NA,at=c(0,150))\ntext(1,120,\"Alpha\",adj=c(0,0),cex=3)\ntext(3.5,10,\"Beta\",adj=c(0,0),cex=3)",
+    "created" : 1508727565760.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "579284813",
+    "id" : "E82505E1",
+    "lastKnownWriteTime" : 8243607616785171280,
+    "last_content_update" : 1508727593073,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 15,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "vr_x = sum((used_data-mean(used_data))^2)/\n  (length(used_data)-1)\n\n# Stationarity\ng_x = length(used_data)*sum((used_data-mean(used_data))^3)/\n  ((length(used_data)-1)*(length(used_data)-2)*sqrt(vr_x)^3)\nif((g_x<=1.15)&(g_x>=-0.7)){\n  k_sta = 0.0087*g_x^3 + 0.0582^2 - 0.32*g_x + 0.2778\n}else{\n  k_sta = -.31158*(1-exp(-.4556*(g_x - 0.97134)))\n}\n\na_sta = sign(k_sta)*k_sta*sqrt(vr_x)/\n  sqrt(gamma(1+2*k_sta)-(gamma(1+2*k_sta))^2)\ne_sta = mean(used_data) - a_sta*(gamma(1+k_sta)-1)/k_sta\n\npp = seq(0.01,1, length.out = 10001)\nrp_gev = (1-pp)^-1\nppp_sta.gev = e_sta + (a_sta/k_sta)*(1-(-log(pp))^k_sta)\n\n# Nonstationarity\n# Homogeneous\nif((sk_x.w<=1.15)&(sk_x.w>=-0.7)){\n  k_non.hom = 0.0087*sk_x.w^3 + 0.0582^2 - 0.32*sk_x.w + 0.2778\n}else{\n  k_non.hom = -.31158*(1-exp(-.4556*(sk_x.w - 0.97134)))\n}\nmu_x.w.hom = exp(mean.hom + (sd.hom^2)/2)\nvr_x.w.hom = exp(2*mean.hom + sd.hom^2)*(exp(sd.hom^2)-1)\ncv_x.w.hom = sqrt(exp(sd.hom^2)-1)\nsk_x.w.hom = 3*cv_x.w.hom + cv_x.w.hom^3\n\na_non.hom = sign(k_non.hom)*k_non.hom*sqrt(vr_x.w.hom)/\n  sqrt(gamma(1+2*k_non.hom)-(gamma(1+2*k_non.hom))^2)\ne_non.hom = mean(used_data) - a_non.hom*(gamma(1+k_non.hom)-1)/k_non.hom\nppp_hom.gev = e_non.hom + (a_non.hom/k_non.hom)*(1-(-log(pp))^k_non.hom)\n\n# Heterogeneous\nk_non.het = k_non.hom\nmu_x.w.het = exp(mean.het + (sd.het^2)/2)\nvr_x.w.het = exp(2*mean.het + sd.het^2)*(exp(sd.het^2)-1)\ncv_x.w.het = sqrt(exp(sd.het^2)-1)\nsk_x.w.het = 3*cv_x.w.het + cv_x.w.het^3\n\na_non.het = sign(k_non.het)*k_non.het*sqrt(vr_x.w.het)/\n  sqrt(gamma(1+2*k_non.het)-(gamma(1+2*k_non.het))^2)\ne_non.het = mean(used_data) - a_non.het*(gamma(1+k_non.het)-1)/k_non.het\nppp_het.gev = e_non.het + (a_non.het/k_non.het)*(1-(-log(pp))^k_non.het)\n\nlast1700 = tail(which(rp_gev<1701),1)\ngev.com = c(ppp_sta.gev, ppp_hom.gev, ppp_het.gev)[1:last1700]\ngev.max = signif(ceiling(max(gev.com)), digits = 1)\ngev.min = signif(round_any(min(gev.com), 10, f = ceiling), digits = 1)\nplot(rp_gev,ppp_sta.gev, log=\"x\", typ=\"n\", \n     xlim = c(1,1700), ylim = c(gev.min,gev.max),\n     xlab = \"Return Period\",\n     ylab = \"Recurrence Level (mph)\",\n     xaxt = \"n\")\naxis(side=1, labels = T, at=c(100,300,700,1700))\nabline(v=c(100, 300,700, 1700), \n       h=seq(40,160,5), \n       col=\"gray\", lty=3)\nlines(rp_gev, ppp_sta.gev, lwd = 2)\nlines(rp_gev, ppp_hom.gev, lwd = 2, lty = 2)\nlines(rp_gev, ppp_het.gev, lwd = 2, lty = 3)\nlegend(\"bottomright\", \n       c(\"Stationary\", \n         \"Trend in Mean\",\n         \"Trend in Mean + Cv\"), \n       lty = c(1,2,3),\n       lwd = 2)",
+    "created" : 1506494070752.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3296137886",
+    "id" : "85168242",
+    "lastKnownWriteTime" : 1506494101,
+    "last_content_update" : 1506494101852,
+    "path" : "C:/Users/Jai/Box Sync/Wind/Florida/gev.R",
+    "project_path" : "gev.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

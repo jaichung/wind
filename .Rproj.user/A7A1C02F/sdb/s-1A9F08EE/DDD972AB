@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "i = 1\nj = 1\nk = 1\nyear = as.data.frame(matrix(, nrow = no_YEARS, ncol = 2))\ndata_u[,14] = year(data_u[,1])\nwhile(k<(no_YEARS)){\n  # Identify which data row is the last one\n  # from all of the year n\n  while(data_u[i + j - 1,14] == data_u[i + j,14]){\n    j = j + 1\n  }\n  j = i + j - 1\n  \n  if(m == 1){\n    # Mean\n    year[k,1] = sum(data_u[i:j,3])/length(i:j)\n    type = \"Mean\"\n  }else if(m == 2){\n    # Median\n    year[k,1] = median(data_u[i:j,3]) \n    type = \"Median\"\n  }else if(m == 3){\n    # Coefficient of Variation\n    year[k,1] = sd(data_u[i:j,3])/\n      (sum(data_u[i:j,3])/length(i:j)) \n    type = \"Coefficient of Variation\"\n  }else if(m == 4){\n    # Maximum\n    year[k,1] = max(data_u[i:j,3])\n    year[k,2] = data_u[i,1]\n    year[k,3] = year(data_u[i,1])\n    year[k,4] = data[match(max(data_u[i:j,3]),\n                           data_u[,3]),4]\n    type = \"Maximum\"\n  }else {\n    # Frequency\n    year[k,1] = length(i:j)\n    type = \"Frequency\"\n  }\n  \n  # i variable is added by 1\n  # to move on to the next year\n  i = j + 1\n  j = 1\n  k = k + 1\n  if(k == (no_YEARS)){\n    last = length(data_u[,3])\n    if(m == 1){\n      year[k,1] = sum(data_u[i:last,3])/length(i:last)\n    }else if(m == 2){\n      year[k,1] = median(data_u[i:last,3])\n    }else if(m == 3){\n      year[k,1] = sd(data_u[i:last,3])/\n        (sum(data_u[i:last,3])/length(i:last)) \n    }else if(m == 4){\n      year[k,1] = max(data_u[i:last,3])\n      year[k,2] = data_u[last,1]\n      year[k,3] = year(data_u[last,1])\n      year[k,4] = data[match(max(data_u[i:last,3]),\n                             data_u[,3]),4]\n    }else{\n      year[k,1] = length(i:last)\n    }\n    k = k + 1\n  }\n}\n\nused_data = year[,1]\n\n# Calculate Serial Correlation\nnume = 0\ndeno = 0\nused_n = length(used_data)\nfor(n in 1:(used_n-1)){\n  nume = nume + (used_data[n]-mean(used_data))*\n    (used_data[n+1]-mean(used_data))\n}\nfor(n in 1:used_n){\n  deno = deno + (used_data[n]-mean(used_data))^2\n}\nsc_t = (nume/(used_n-1))/(deno/used_n)\n\nif((sc_t<=1.96/sqrt(length(used_data)))&\n   (sc_t>=-1.96/sqrt(length(used_data)))){\n  \n  # von Storch autocorrelation correction\n  mod_i = 2\n  for (mod_i in 2:length(used_data)){\n    used_data[mod_i] = used_data[mod_i] - \n      sc.temp*used_data[mod_i-1]\n  }\n}\n\nused_date = year[,3]",
+    "created" : 1508726644371.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1611517528",
+    "id" : "DDD972AB",
+    "lastKnownWriteTime" : 1508734374,
+    "last_content_update" : 1508734375083,
+    "path" : "C:/Users/Jai/Box Sync/Wind/Florida/annmax.R",
+    "project_path" : "annmax.R",
+    "properties" : {
+        "source_window_id" : "",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 14,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

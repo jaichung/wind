@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "# LP3\nn_lp = length(ln_used_data)\nsk_y.w.lp = (1+6/n_lp)*\n  ((n_lp*sum((ln_used_data-mean(ln_used_data))^3)))/\n  ((n_lp-1)*(n_lp-2)*sd(ln_used_data)^3)\na.lp3 = max(2/sk_y.w.lp,0.4)\nb.lp3 = 1 + 0.0144*((max(0,sk_y.w.lp-2.25))^2)\nf.lp3 = sk_y.w.lp - 0.063*(max(0,sk_y.w.lp-1)^1.85)\nh.lp3 = (b.lp3 - 2/(sk_y.w.lp*a.lp3))^(1/3)\nk.p_max2 = 1-((f.lp3/6)^2) + qnorm(1-(1/rp))*((f.lp3/6))\nkp_i = 1\nk.p = as.data.frame(\n  matrix(, nrow = length(k.p_max2), \n         ncol = 1))\nfor(kp_i in 1:length(k.p_max2)){\n  k.p[kp_i,] = max(h.lp3,k.p_max2[kp_i])\n}\nk.p = a.lp3*(k.p^3) - b.lp3\n\nppp_sta = exp(mean.sta + k.p*sd.sta)\nppp_hom = exp(mean.hom + k.p*sd.hom)\nppp_het = exp(mean.het + k.p*sd.het)",
+    "created" : 1506493971502.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2139887076",
+    "id" : "EEC8503E",
+    "lastKnownWriteTime" : 1506494004,
+    "last_content_update" : 1506494004037,
+    "path" : "C:/Users/Jai/Box Sync/Wind/Florida/pe3.R",
+    "project_path" : "pe3.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

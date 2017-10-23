@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "sc_i = 1\nfor (sc_i in 1:length(sc_ind_TF)){\n  data = read.xlsx(\n    paste(dir,\"Lower_48\",\n          paste(\"station_matrix_\",stations_dup[sc_i,1],\n                \"_update.xlsx\",sep=\"\"),\n          sep=\"/\"))\n  colnames(data) <- data[6,]\n  \n  # Delete unnecessary rows until first data\n  data = data[(grep(\"^Date\", \n                    data[,1])+1):length(data[,1]),]\n  \n  data[,1] <-as.POSIXct(as.numeric(data[,1])*24*3600\n                        + as.POSIXct(\"1899-12-30 00:00\"))\n  \n  # Convert strings into numbers\n  data[,2] = as.numeric(data[,2])\n  data[,3] = as.numeric(data[,3])\n  \n  # Read storm type\n  if(pv==1){\n    # Commingled\n    data_u <- data\n    text.storm = \"Commingled\"\n  }\n  if(pv==2){\n    # Non-thunderstorm\n    data_u <- data[-c(which(data[,5]!=\"1\")),]\n    text.storm = \"Non-Thunderstorm\"\n  }\n  if(pv==3){\n    # Thunderstorm\n    data_u <- data[-c(which(data[,7]!=\"1\")),]\n    text.storm = \"Thunderstorm\"\n  }\n  if(pv==4){\n    # Tropical Storm\n    data_u <- data[-c(which(data[,10]!=\"1\")),]\n    text.storm = \"Tropical Storm\"\n  }\n  \n  # no_YEARS: how many data points are there?\n  no_YEARS = length(unique(year(data_u[,1])))\n  if(no_YEARS < 4){\n    # sigval[2*pv-1,file_i] = NaN\n    # sigval[2*pv,file_i] = NaN\n    # \n    # sigval_type[2*pv-1,file_i] = NaN\n    # sigval_type[2*pv,file_i] = NaN\n    # \n    # # Mann Kendall P-Values\n    # mk[pv,file_i] = NaN\n    # \n    # d_sign[pv,file_i] = NaN\n  }else{\n    source(paste0(dir_fl,\"annmax.R\"))\n    \n    \n    t = used_date - min(used_date)\n    t[which(is.na(used_data))] = NA\n    used_data <- used_data[!is.na(used_data)]\n    t <- t[!is.na(t)]\n    \n  }\n  # sc_acf = acf(used_data, plot=F)\n  # sc[type_w+1,file_i] = sc_acf$acf[2]\n  # \n  if(sc_ind_TF[sc_i]==T){\n    nume = 0\n    deno = 0\n    used_n = length(used_data)\n    for(n in 1:(used_n-1)){\n      nume = nume + (used_data[n]-mean(used_data))*\n        (used_data[n+1]-mean(used_data))\n    }\n    for(n in 1:used_n){\n      deno = deno + (used_data[n]-mean(used_data))^2\n    }\n    \n    sc.temp = (nume/(used_n-1))/(deno/used_n)\n    \n    # von Storch autocorrelation correction\n    mod_i = 2\n    for (mod_i in 2:length(used_data)){\n      used_data[mod_i] = used_data[mod_i] - \n        sc.temp*used_data[mod_i-1]\n    }\n    \n    # Manual MK\n    # S\n    mk_s = 0\n    mk_j = 1\n    while(mk_j<length(used_data)){\n      mk_i = mk_j + 1\n      while(mk_i<length(used_data)+1){\n        mk_s = mk_s + sign(used_data[mk_i] - used_data[mk_j])\n        mk_i = mk_i + 1\n      }\n      mk_j = mk_j + 1\n    }\n    \n    # VARS\n    mk_n = length(used_data)\n    vars = (mk_n*(mk_n-1)*(2*mk_n+5))/18\n    \n    # ZMK\n    if(vars>0){\n      mk_z = (mk_s-1)/(sqrt(vars))\n    }else if(vars<0){\n      mk_z = (mk_s+1)/(sqrt(vars))\n    }else if(vars==0){\n      mk_z = 0\n    }\n    \n    # Pval\n    stations_dup[sc_i,15] = 2*(1-pnorm(abs(mk_z)))\n  }\n  \n  lmom[sc_i,1] = \n    stations_dup[sc_i,1]\n  lmom[sc_i,2] = \n    length(used_data)\n  lmom[sc_i,3:7] = \n    Lmoments(used_data, rmax = 5)\n  cov[sc_i,1:2] =\n    as.data.frame(cbind(stations_dup[sc_i,1],\n                        mean(used_data)/pop.sd(used_data)))\n  cov[sc_i,3] = mean(used_data)\n  cov[sc_i,4] = mean(as.numeric(year[,4]))\n  cov[sc_i,5] = median(as.numeric(year[,4]))\n  \n}",
+    "created" : 1508726231795.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "198644399",
+    "id" : "64EB519E",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1508726233646,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 14,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

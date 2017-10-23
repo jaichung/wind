@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1508490851613.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "90669CA0",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1508490851613,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "196FA86A",
+        "caption" : "mappoint",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=mappoint&cache_key=196FA86A",
+        "displayedObservations" : 108,
+        "environment" : "",
+        "object" : "mappoint",
+        "preview" : 0,
+        "totalObservations" : 108,
+        "variables" : 3
+    },
+    "relative_order" : 15,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
